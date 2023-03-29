@@ -4,6 +4,8 @@ import 'package:projet_mob/pages/like_page.dart';
 import 'package:projet_mob/pages/recherche_page.dart';
 import 'package:projet_mob/pages/wishlist_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'avis_page.dart';
 
