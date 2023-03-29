@@ -86,14 +86,14 @@ class _AccueilState extends State<Accueil> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
-        actions: [
+        /*actions: [
           IconButton(
             onPressed: () async {
               await _auth.signOut();
             },
             icon: const Icon(Icons.logout),
           ),
-        ],
+        ],*/
       ),
       body: ListView.builder(
         itemCount: _gameList.length,
