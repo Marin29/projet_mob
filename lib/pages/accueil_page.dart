@@ -15,100 +15,106 @@ class Accueil extends StatefulWidget {
 }
 
 class _AccueilState extends State<Accueil> {
-  final events =[
-  {
-  "intitule": "Métro 1",
-  "type": "metro",
-  "logo": "M1.jpg"
-},
-{
-"intitule": "Métro 2",
-"type": "metro",
-"logo": "M2.png"
-},
-{
-"intitule": "Tramway R",
-"type": "tram",
-"logo": "TR.jpg"
-},
-{
-"intitule": "Tramway T",
-"type": "tram",
-"logo": "TT.jpg"
-}
-];
+  //final FirebaseAuth _auth = FirebaseAuth.instance;
+  //User? user = FirebaseAuth.instance.currentUser;
+
+  List<dynamic> _gameList = [];
+
+  /*firebaseAuth() async {
+    await FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        print('User is signed in!');
+      }
+    });
+  }*/
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchGames();
+  }
+
+  Future<void> _fetchGames() async {
+
+    final response = await http.get(
+        Uri.parse('https://api.steampowered.com/ISteamApps/GetAppList/v2/'),
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Origin, Content-Type',
+        });
+    final decodedResponse = json.decode(response.body);
+    setState(() {
+      _gameList = decodedResponse['applist']['apps'];
+    });
+
+    /*final server = await HttpServer.bind('localhost', 8080);
+
+    print('Listening on http://${server.address.host}:${server.port}/');
+
+    await for (var request in server) {
+      // Ajoute les en-têtes CORS
+      request.response.headers.add('Access-Control-Allow-Origin', '*');
+      request.response.headers.add('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      request.response.headers.add('Access-Control-Allow-Headers', 'Origin, Content-Type');
+
+      // Traite la requête
+      if (request.method == 'GET') {
+        final response = await http.get(Uri.parse('https://api.steampowered.com/ISteamApps/GetAppList/v2/'));
+        final decodedResponse = json.decode(response.body);
+        setState(() {
+          _gameList = decodedResponse['applist']['apps'];
+        });
+      } else {
+        // Renvoie une réponse 404
+        request.response
+          ..statusCode = HttpStatus.notFound
+          ..write('Not found');
+      }
+
+      // Ferme la réponse
+      await request.response.close();
+    }*/
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title :
-        const Text("Accueil"),
+        title: const Text('Home'),
         actions: [
           IconButton(
-            icon: Icon(Icons.favorite_border, color: Colors.white),
-            onPressed: () {   Navigator.push(
-                context,
-                PageRouteBuilder(
-                    pageBuilder: (_,__,___) => Like()
-                )
-            );
+            onPressed: () async {
+              await _auth.signOut();
             },
-          ),
-          IconButton(
-            icon: Icon(Icons.star_border, color: Colors.white),
-            onPressed: () {   Navigator.push(
-                context,
-                PageRouteBuilder(
-                    pageBuilder: (_,__,___) => Wishlist()
-                )
-            );
-              },
+            icon: const Icon(Icons.logout),
           ),
         ],
-
-        ),
-      body:
-
-
-        Center(
-          child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      ),
+      body: ListView.builder(
+        itemCount: _gameList.length,
+        itemBuilder: (context, index) {
+          final game = _gameList[index];
+          return Card(
+            child: Column(
               children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'Rechercher un jeu...',
-                    hintText: 'rentre message',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value){
-                    if(value==null || value.isEmpty){
-                      return "tu dois compléter le texte";
-                    }
-                    return null;
-                  },
-                   /* actions: [
-                      IconButton(
-                    icon: Icon(Icons.star_border, color: Colors.white),
-                    onPressed: () {   Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                            pageBuilder: (_,__,___) => Recherche()
-                        )
-                    );
-                    },
-                  ),]*/
+                Image.network(
+                  'https://cdn.akamai.steamstatic.com/steam/apps/${game['appid']}/header.jpg',
+                  height: 100,
                 ),
+                ListTile(
+                  title: Text(game['name']),
+                  subtitle: Text('ID du jeu: ${game['appid']}'),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
 
-              ]
-        )
-
-
-        )
-      );
-
-
-
-
+    );
   }
 }
 
