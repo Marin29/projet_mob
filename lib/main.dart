@@ -1,15 +1,23 @@
 
 
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projet_mob/pages/accueil_page.dart';
 import 'package:projet_mob/pages/connexion_page.dart';
 import 'package:projet_mob/pages/inscription_page.dart';
 
+import 'firebase_options.dart';
 
 
 
-void main(){
+
+Future<void> main() async {
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 
 }
