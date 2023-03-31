@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:projet_mob/pages/inscription_page.dart';
 import 'package:projet_mob/pages/like_page.dart';
-import 'package:projet_mob/pages/recherche_page.dart';
 import 'package:projet_mob/pages/wishlist_page.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
-
-import 'avis_page.dart';
 
 Future<List<Rank>> fetchGames() async {
   try {
@@ -171,7 +167,7 @@ class _AccueilState extends State<Accueil> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => (MesLikes()),
+                        builder: (context) => (Like()),
                       )
                   );
                 },
@@ -182,7 +178,7 @@ class _AccueilState extends State<Accueil> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => (MesSouhaits()),
+                        builder: (context) => (Wishlist()),
                       )
                   );
                 },

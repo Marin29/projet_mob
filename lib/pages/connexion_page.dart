@@ -28,6 +28,8 @@ import 'package:projet_mob/pages/accueil_page.dart';
 
 import 'inscription_page.dart';
 
+
+
 class Connexion extends StatefulWidget {
   const Connexion({Key? key}) : super(key: key);
 
@@ -36,6 +38,8 @@ class Connexion extends StatefulWidget {
 }
 
 class _ConnexionState extends State<Connexion> {
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _email = '';
@@ -143,7 +147,7 @@ class _ConnexionState extends State<Connexion> {
                             onPressed: () async {
                               try {
                                 UserCredential userCredential =
-                                await FirebaseAuth.instance
+                                await _auth
                                     .signInWithEmailAndPassword(
                                   email: _email,
                                   password: _password,
