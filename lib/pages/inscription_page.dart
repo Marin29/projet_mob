@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:projet_mob/pages/accueil_page.dart';
+
 class Inscription extends StatefulWidget {
   const Inscription({Key? key}) : super(key: key);
 
@@ -13,17 +15,16 @@ class _InscriptionState extends State<Inscription> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _password2Controller = TextEditingController();
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // changer la couleur de fond en gris clair
+      backgroundColor: const Color(0xFF1A2025),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
+        padding: const EdgeInsets.all(22.44),
+        child: ListView(
           children: <Widget>[
             const Text(
               'Inscription !',
@@ -50,6 +51,11 @@ class _InscriptionState extends State<Inscription> {
                 labelStyle: TextStyle(color: Colors.white),
                 alignLabelWithHint: true, // aligner le titre avec le texte d'entrée
               ),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15.24,
+                fontFamily: 'Proxima Nova',
+              ),
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -62,6 +68,11 @@ class _InscriptionState extends State<Inscription> {
                 labelStyle: TextStyle(color: Colors.white),
                 alignLabelWithHint: true, // aligner le titre avec le texte d'entrée
               ),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15.24,
+                fontFamily: 'Proxima Nova',
+              ),
             ),
             const SizedBox(height: 16.0),
             TextField(
@@ -73,6 +84,11 @@ class _InscriptionState extends State<Inscription> {
                 fillColor: Color.fromRGBO(30, 38, 44, 1.0),// couleur de fond
                 labelStyle: TextStyle(color: Colors.white),
                 alignLabelWithHint: true, // aligner le titre avec le texte d'entrée
+              ),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15.24,
+                fontFamily: 'Proxima Nova',
               ),
               obscureText: true,
             ),
@@ -87,6 +103,11 @@ class _InscriptionState extends State<Inscription> {
                 labelStyle: TextStyle(color: Colors.white),
                 alignLabelWithHint: true, // aligner le titre avec le texte d'entrée
               ),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 15.24,
+                fontFamily: 'Proxima Nova',
+              ),
               obscureText: true,
             ),
             const SizedBox(height: 32.0),
@@ -97,11 +118,27 @@ class _InscriptionState extends State<Inscription> {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
               child: Text('S\'inscrire'),
-              onPressed: () {
-                final String mail = _emailController.text.trim();
-                final String mdp = _passwordController.text.trim();
-                //BlocProvider.of<UserBloc>(context).add(SignUpEvent(mail, mdp));
-                Navigator.pop(context);
+              onPressed: () async {
+                try {
+                  UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                  );
+                  // L'utilisateur a été créé avec succès.
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Accueil()),
+                  );
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'weak-password') {
+                    print('Le mot de passe est trop faible.');
+                  } else if (e.code == 'email-already-in-use') {
+                    print('Cette adresse e-mail est déjà utilisée.');
+                  }
+                } catch (e) {
+                  print(e);
+                }
                 //BlocProvider.of<UserBloc>(context).add(ConnectUserEvent());
               },
             ),

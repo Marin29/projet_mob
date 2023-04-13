@@ -18,6 +18,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+
   runApp(const MyApp());
 
 }
@@ -38,13 +39,11 @@ class _MyAppState extends State<MyApp> {
   }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
+      title: 'Steam-like app',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
        body : Connexion()
-
-
-
-
       ),
     );
   }

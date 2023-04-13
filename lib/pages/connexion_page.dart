@@ -55,9 +55,7 @@ class _ConnexionState extends State<Connexion> {
         body: Container(
           color: const Color(0xFF1A2025),
           child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: ListView(
               children: <Widget>[
                 const SizedBox(height: 51.67),
                 const Text(
@@ -97,7 +95,9 @@ class _ConnexionState extends State<Connexion> {
                           decoration: const InputDecoration(
                             filled: true,
                             fillColor: Color(0xFF1E262C),
-                            hintText: 'E-mail',
+                            labelText: 'E-mail',
+                            alignLabelWithHint: true, // aligner le titre avec le texte d'entrée
+                            labelStyle: TextStyle(color: Colors.white),
                             hintStyle: TextStyle(
                               color: Colors.white,
                               fontSize: 15.24,
@@ -122,7 +122,9 @@ class _ConnexionState extends State<Connexion> {
                           decoration: const InputDecoration(
                             filled: true,
                             fillColor: Color(0xFF1E262C),
-                            hintText: 'Mot de passe',
+                            labelText: 'Mot de passe',
+                            alignLabelWithHint: true, // aligner le titre avec le texte d'entrée
+                            labelStyle: TextStyle(color: Colors.white),
                             hintStyle: TextStyle(
                               color: Colors.white,
                               fontSize: 15.24,

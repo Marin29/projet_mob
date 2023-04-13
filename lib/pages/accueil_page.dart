@@ -42,8 +42,7 @@ Future<List<Rank>> _getGameDetails(List<Rank> ranks) async {
       final jsonBody = jsonDecode(response.body);
       if (jsonBody[rank.appId.toString()]['success']) {
         rank.name = jsonBody[rank.appId.toString()]['data']['name'];
-        rank.header_image =
-        jsonBody[rank.appId.toString()]['data']['header_image'];
+        rank.header_image = jsonBody[rank.appId.toString()]['data']['header_image'];
       }
     }
     updatedRanks.add(rank);
@@ -187,7 +186,7 @@ class _AccueilState extends State<Accueil> {
           ),
           body: Container(
             color: const Color(0xFF1A2025),
-            child: Column(
+            child: ListView(
               children: [
                 const Padding(
                   padding: EdgeInsets.all(8.0),
@@ -217,14 +216,41 @@ class _AccueilState extends State<Accueil> {
                       if (snapshot.hasData) {
                         final ranks = snapshot.data!;
                         return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
                           itemCount: ranks.length,
                           itemBuilder: (context, index) {
                             final rank = ranks[index];
-                            return Container(
-                              //child: Text('${rank.name}. ${rank.appId}'),
-                                child: Image.network(
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Image.network(
                                   '${rank.header_image}',
-                                ));
+                                ),
+                                Flexible(
+                                    child:Text('${rank.name}. ${rank.appId}',
+                                      style : const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 15.24,
+                                        fontFamily: 'Proxima Nova',
+                                      ),
+                                    ),
+                                ),
+                                TextButton(
+                                  child: (
+                                      const Text(
+                                        'En savoir \nplus',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15.24,
+                                          fontFamily: 'Proxima Nova',
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )
+                                  ),
+                                  onPressed: () {  },
+                                )
+                              ],);
                           },
                         );
                       } else if (snapshot.hasError) {
