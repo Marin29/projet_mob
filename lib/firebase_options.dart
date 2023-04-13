@@ -23,15 +23,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -62,10 +56,34 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBfu4daDI33kvw_MlqZ6bCbxRdXISiDlQk',
-    appId: '1:767892366272:android:7eadb9c75af38fb7a7de25',
+    appId: '1:767892366272:android:a39dbc306ccf3b02a7de25',
     messagingSenderId: '767892366272',
     projectId: 'test-75600',
     databaseURL: 'https://test-75600-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'test-75600.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAi9alhI8DMb5P9BVyZAQzGZNZfUdAN1sY',
+    appId: '1:767892366272:ios:0b3d188e39f49eb9a7de25',
+    messagingSenderId: '767892366272',
+    projectId: 'test-75600',
+    databaseURL: 'https://test-75600-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'test-75600.appspot.com',
+    androidClientId: '767892366272-cdb0rkf0c15ui9586ad38u503bt9h7vb.apps.googleusercontent.com',
+    iosClientId: '767892366272-nldlqcaau27efgn8ade5irbrfpge64dq.apps.googleusercontent.com',
+    iosBundleId: 'com.example.projetMob',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAi9alhI8DMb5P9BVyZAQzGZNZfUdAN1sY',
+    appId: '1:767892366272:ios:0b3d188e39f49eb9a7de25',
+    messagingSenderId: '767892366272',
+    projectId: 'test-75600',
+    databaseURL: 'https://test-75600-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'test-75600.appspot.com',
+    androidClientId: '767892366272-cdb0rkf0c15ui9586ad38u503bt9h7vb.apps.googleusercontent.com',
+    iosClientId: '767892366272-nldlqcaau27efgn8ade5irbrfpge64dq.apps.googleusercontent.com',
+    iosBundleId: 'com.example.projetMob',
   );
 }

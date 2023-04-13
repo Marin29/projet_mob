@@ -1,6 +1,8 @@
 
 
 
+import 'dart:ui';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:projet_mob/pages/accueil_page.dart';
@@ -13,7 +15,8 @@ import 'firebase_options.dart';
 
 
 Future<void> main() async {
-
+  WidgetsFlutterBinding.ensureInitialized();
+  DartPluginRegistrant.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
