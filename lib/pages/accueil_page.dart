@@ -237,6 +237,13 @@ class _AccueilState extends State<Accueil> {
                                     ),
                                 ),
                                 TextButton(
+                                  onPressed: () {  },
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all<Color>(
+                                        Color.fromRGBO(99, 106, 245, 1.0)),
+                                    foregroundColor: MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                                  ),
                                   child: (
                                       const Text(
                                         'En savoir \nplus',
@@ -248,7 +255,6 @@ class _AccueilState extends State<Accueil> {
                                         textAlign: TextAlign.center,
                                       )
                                   ),
-                                  onPressed: () {  },
                                 )
                               ],);
                           },

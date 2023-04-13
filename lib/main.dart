@@ -18,6 +18,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  //widgetsFlutterBinding.ensureInitialized();
 
   runApp(const MyApp());
 
